@@ -102,7 +102,7 @@ async function publish(pluginConfig, context) {
         infos.push(info);
     }
 
-    return Promise.all(infos);
+    return Promise.all(infos).then(values => ({releases: values}));
 }
 
 async function addChannel(pluginConfig, context) {
