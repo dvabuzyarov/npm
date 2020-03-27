@@ -1,11 +1,22 @@
-version: ~> 1.0
-
-services:
-  - docker
-
-import:
-  - semantic-release/semantic-release:.travis/node.yml
-  - semantic-release/semantic-release:.travis/node-versions.yml
-  - semantic-release/semantic-release:.travis/semantic-release.yml
-  - semantic-release/semantic-release:.travis/greenkeeper.yml
-  - semantic-release/semantic-release:.travis/codecov.yml
+language: node_js
+node_js:
+- '12'
+sudo: false
+git:
+  depth: 1
+install:
+- npm ci
+cache:
+  directories:
+  - "$HOME/.npm"
+script:
+- npm run lint
+after_success:
+- npm run semantic-release
+branches:
+  except:
+  - "/^v\\d+\\.\\d+\\.\\d+$/"
+env:
+  global:
+  - secure: jj4bdXXjVKIKN1GWYjXhTYdX7/0blbMwRuxwvduT9/wx70XJhvhVgOyvD1NiXed9NNstqYJjSXTSC8/xQ/iMklR22Xmxz/+FWG6C67tN5TMtrGKGOeUBjPtqg+zmoF9AZIhF6/v6BCWJObwvj6vsE746A/XJao/XiBn89bNRHB9b/HbVAAcBnhXEuKkNzfTuc+SGMkLjmT8EMc7mu10uUb/CSR/181MC6zDydTHdSn2dLlA0SW0FJ7jtGBtQ5X849qeDU2xtznp5BKZkKqtXGFeB17FD0Gr5gcbN6UIIy8gqaoD/ZiWCR+9+jJkwc2TNW93dm4pBZvMF3WPpW/b1bLIEyR3Hnd1pAa/OugmmFS8KszHJ8I139XUK8hT7rPUJfHyr08XEGMQA4ELI0v41Il4z43IarISgq7P+SpkPKk+SBBRtEirayaHoqKF+LvSzSsNHY+pE8kptZC1EEO0AV6l4zqNiYRtXsQO4Yzq4Dpel3HjrxE7LCHwry+MHG2nRil/PRTNF/bO5/nAnTkNhLlP51Zv9fbRGH6YCUEevYxk5YtmstxqlDz0/ep5NtnfbkLDLHPb1d0sMZOGNxu09d8H4w/4FueFNM7oXuBCKSKSHe1t5jDLY8dIpYqZl+92/D6GpOTjY3iY5KXIHM9wQIgZMGqM8hy/oyD8xa31JgKg=
+  - secure: VGo7KQYRQMGqDUbNMNj95a9JqDXAENM3yG4YQfFWARQm7+4+aPjnSyFX+bLM8rF2ZpWheeTjAQq/PAbfU1gBiz4T+1NTiGkH1OGbe45Kb4/m3CZzXXevMwSZ/eGyadSUSsGHhIPjcmoQ1VEGFE2Bhjg5z33jsDBEBOC8nRfgDy9GilMyMnXYeKG0APOeEoDY9SIbWKl0w0DW0a1dvJVjcNPBbMTOJfcXdICbwa+BunBIVvi5Ci26SIHeMU4qtT5+ea77ejOrqaJw8vnIHgUe8gR2MoQLJid5jztcrfakviNWLHEWCME8Z2iEZgpHa9uegEnEqZcPzWiOF6U9qTAwVO3at/rtDV0royf3/qqPupMcqqdhvdqvns+WLM5wPL/MnBIDEffM84MO2qp4o3xybCTTL3zlx2J3sbb/N5k2EUdpjX/i3tk2Rf65aGCvYnW1BZlJYmblbyRicKQ0VZTRXlKJZyJqwJGT7n5Qjy4BXVsOcwsOY3fipj0wRJit6hC6m4m1d4dMXD+YbV8HS6lfLvfCwLpZv2e9Gt94cbTcGSHMCMhmq7UAWDUQudrVXiWTh378GEgOTiht3v0fZ2ApmKaMWLOUxX6s2Tj/DMNmpB3GfVrju1/zSy7qI2LncURcqKjd0dv9FKykRmF47WnNv4T6fpRjN/uXucRbMe7vtfs=

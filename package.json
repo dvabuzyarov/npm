@@ -1,6 +1,6 @@
 {
-  "name": "@semantic-release/npm",
-  "description": "semantic-release plugin to publish a npm package",
+  "name": "@dvabuzyarov/npm",
+  "description": "semantic-release plugin for monorepos to publish npm packages",
   "version": "0.0.0-development",
   "author": "Pierre Vanduynslager (https://twitter.com/@pvdlg_)",
   "ava": {
@@ -14,7 +14,8 @@
   },
   "contributors": [
     "Stephan Bönnemann <stephan@boennemann.me> (http://boennemann.me)",
-    "Gregor Martynus (https://twitter.com/gr2m)"
+    "Gregor Martynus (https://twitter.com/gr2m)",
+    "Dmitry Abuzyarov <dvabuzyarov@gmail.com>"
   ],
   "dependencies": {
     "@semantic-release/error": "^2.2.0",
@@ -87,7 +88,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/semantic-release/npm.git"
+    "url": "https://github.com/dvabuzyarov/npm.git"
   },
   "scripts": {
     "codecov": "codecov -f coverage/coverage-final.json",
