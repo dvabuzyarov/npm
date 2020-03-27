@@ -63,12 +63,13 @@ async function prepare(pluginConfig, context) {
         } catch (error) {
             errors.push(...error);
         }
-    }
-    if (errors.length > 0) {
-        throw new AggregateError(errors);
-    }
 
-    await prepareNpm(npmrc, pluginConfig, context);
+        if (errors.length > 0) {
+            throw new AggregateError(errors);
+        }
+
+        await prepareNpm(npmrc, {...pluginConfig, pkgRoot}, context);
+    }
     prepared = true;
 }
 
@@ -77,6 +78,7 @@ async function publish(pluginConfig, context) {
     const errors = verified ? [] : verifyNpmConfig(pluginConfig);
 
     setLegacyToken(context);
+    const infos = [];
     for (const pkgRoot of pluginConfig.pkgRoot) {
         try {
             // Reload package.json in case a previous external step updated it
@@ -87,16 +89,20 @@ async function publish(pluginConfig, context) {
         } catch (error) {
             errors.push(...error);
         }
-    }
-    if (errors.length > 0) {
-        throw new AggregateError(errors);
+
+        if (errors.length > 0) {
+            throw new AggregateError(errors);
+        }
+
+        if (!prepared) {
+            await prepareNpm(npmrc, {...pluginConfig, pkgRoot}, context);
+        }
+
+        const info = publishNpm(npmrc, {...pluginConfig, pkgRoot}, pkg, context);
+        infos.push(info);
     }
 
-    if (!prepared) {
-        await prepareNpm(npmrc, pluginConfig, context);
-    }
-
-    return publishNpm(npmrc, pluginConfig, pkg, context);
+    return infos;
 }
 
 async function addChannel(pluginConfig, context) {
@@ -104,6 +110,7 @@ async function addChannel(pluginConfig, context) {
     const errors = verified ? [] : verifyNpmConfig(pluginConfig);
 
     setLegacyToken(context);
+    const infos = [];
     for (const pkgRoot of pluginConfig.pkgRoot) {
         try {
             // Reload package.json in case a previous external step updated it
@@ -114,13 +121,17 @@ async function addChannel(pluginConfig, context) {
         } catch (error) {
             errors.push(...error);
         }
+
+
+        if (errors.length > 0) {
+            throw new AggregateError(errors);
+        }
+
+        const info = addChannelNpm(npmrc, pluginConfig, pkg, context);
+        infos.push(info);
     }
 
-    if (errors.length > 0) {
-        throw new AggregateError(errors);
-    }
-
-    return addChannelNpm(npmrc, pluginConfig, pkg, context);
+    return infos;
 }
 
 module.exports = {verifyConditions, prepare, publish, addChannel};
