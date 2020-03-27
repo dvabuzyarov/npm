@@ -102,7 +102,7 @@ async function publish(pluginConfig, context) {
         infos.push(info);
     }
 
-    return infos;
+    return Promise.all(infos);
 }
 
 async function addChannel(pluginConfig, context) {
