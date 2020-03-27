@@ -10,7 +10,7 @@ cache:
   directories:
   - "$HOME/.npm"
 script:
-- npm run lint
+#- npm run lint
 after_success:
 - npm run semantic-release
 branches:
