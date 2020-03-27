@@ -60,7 +60,8 @@
     "publish",
     "registry",
     "semantic-release",
-    "version"
+    "version",
+    "monorepo"
   ],
   "license": "MIT",
   "main": "index.js",
