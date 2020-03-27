@@ -92,6 +92,7 @@
   },
   "scripts": {
     "codecov": "codecov -f coverage/coverage-final.json",
+    "test": "",
     "lint": "xo",
     "semantic-release": "semantic-release"
   },
